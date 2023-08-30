@@ -1,0 +1,29 @@
+<div  id="body">
+    <div fxLayout="row" fxLayoutAlign="end" >
+        <button mat-button [mat-dialog-close]="true" >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div id="content" fxLayout="row">
+        <img src="{{this.productData.imgSource}}" height="500px">
+        <div id="contentAfterImg">
+            <h2>{{this.productData.title}}</h2>
+            <p>Genre: {{this.productData.genre}}</p>
+            <p>Page number: {{this.productData.pageNumber}}</p>
+            <p>Author: {{this.productData.author}}</p>
+            <p>Release date: {{this.productData.releaseDate.toLocaleDateString('en-US')}}</p>
+            <h3>Price: {{this.productData.price}} din</h3>
+            <div fxLayout="row" fxLayoutAlign="center">
+                <h2><mat-icon>star</mat-icon>{{getRoundedNum(this.productData.totalRate,this.productData.numberOfReviews)}}/5</h2>
+            </div>
+            <div fxLayoutAlign="center" *ngIf="this.userService.canRateProduct(productData.id)">
+                <button mat-icon-button (click)="this.rateProduct(productData.id, 1)"><mat-icon>{{this.Picon1}}</mat-icon></button>
+                <button mat-icon-button (click)="this.rateProduct(productData.id, 2)"><mat-icon>{{this.Picon2}}</mat-icon></button>
+                <button mat-icon-button (click)="this.rateProduct(productData.id, 3)"><mat-icon>{{this.Picon3}}</mat-icon></button>
+                <button mat-icon-button (click)="this.rateProduct(productData.id, 4)"><mat-icon>{{this.Picon4}}</mat-icon></button>
+                <button mat-icon-button (click)="this.rateProduct(productData.id, 5)"><mat-icon>{{this.Picon5}}</mat-icon></button>
+            </div>
+            <button mat-button color="primary" id="addbutton" (click)="addToCart(this.productData.id)">Add to cart</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<body>
+    <mat-tab-group>
+        <mat-tab label="Cart">
+            
+            <h1 fxLayoutAlign="center" *ngIf="cartIsEmpty">Cart is Empty</h1>
+
+        
+
+            <!-- <table *ngIf="!cartIsEmpty" mat-table [dataSource]="cart" class="mat-elevation-z8"> -->
+                <!-- Name -->
+                <!-- <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container> -->
+
+                <!-- Price -->
+                <!-- <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef> Price </th>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container> -->
+
+                <!-- Delete -->
+                <!-- <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef> Remove </th>
+                    <td mat-cell *matCellDef="let element"><button mat-icon-button (click)="removeFromCart(element.id)"><mat-icon>close</mat-icon></button></td>
+                </ng-container>
+
+                
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>  -->
+
+            <ul *ngFor="let product of cart">
+                <li fxLayout="row" fxLayoutAlign="space-around">
+                    <div id="title"><h3>{{product.title}}</h3></div>
+                    <div><h3>{{product.price}} din</h3></div>
+                    <button mat-icon-button (click)="removeFromCart(product.id, product.price)"><mat-icon>close</mat-icon></button>
+                </li>
+            </ul>
+
+            <h2 fxLayoutAlign="center" *ngIf="!cartIsEmpty" >Total price = {{this.total}} din</h2>
+            
+            <div fxLayoutAlign="center"><button mat-raised-button color="primary"
+                    *ngIf="!this.cartIsEmpty" 
+                    (click)="addOrder()" >Order</button></div>
+
+        </mat-tab>
+        
+        <mat-tab label="History">
+            <mat-table [dataSource]="dataSource">
+                <!-- Order id Column  -->
+                <ng-container matColumnDef="orderId">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let order"> {{order.id}} </td>
+                </ng-container>
+                <!-- Product Title  -->
+                <ng-container matColumnDef="productTitle">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let order"> {{order.products[0].title}} </td>
+                </ng-container>
+
+                <!-- Status  -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let order"> {{order.status}} </td>
+                </ng-container>
+
+                <!-- Cancel button  -->
+                <ng-container matColumnDef="cancelButton">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let order"><button mat-button *ngIf="isOngoing(order.status)" (click)="cancelOrder(order.id)" >Cancel</button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </mat-table>
+        </mat-tab> 
+    </mat-tab-group>
+</body>
+
+
+<!-- Order id Column 
+                <ng-container matColumnDef="orderId">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <!-- Product Title 
+                <ng-container matColumnDef="productTitle">
+                    <th mat-header-cell *matHeaderCellDef> Title </th>
+                    <td mat-cell *matCellDef="let element"> {{element.product.title}} </td>
+                </ng-container>
+
+                <!-- Status 
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Weight </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            -->

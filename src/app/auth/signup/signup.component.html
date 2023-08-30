@@ -1,0 +1,28 @@
+<body>
+<section fxLayout="column" fxLayoutAlign="center center">
+    <form fxLayout="column" fxLayoutAlign="center center"
+            #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <mat-form-field>
+            <input type="email" matInput placeholder="Your email" ngModel name="email" required email #emailInput="ngModel">
+            <mat-error *ngIf="emailInput.hasError('required')">Field should not be empty</mat-error>
+            <mat-error *ngIf="!emailInput.hasError('required')">Email format isn't correct</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="Minimum 8 characters">
+            <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="8"
+            #passInput="ngModel">
+            <mat-hint align="end" >{{passInput.value?.length}}/8</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Your name" ngModel name="name" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input type="text" matInput placeholder="Your phone number" ngModel name="phone" required>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+        <mat-error *ngIf="errorExists"> {{errorText}}</mat-error>
+    </form>
+    <p>Already have an account?</p>
+    <a routerLink="/login">Login here</a>
+</section>
+</body>

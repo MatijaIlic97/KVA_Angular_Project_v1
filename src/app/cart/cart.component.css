@@ -1,0 +1,21 @@
+li{
+    border-bottom: 1px solid white;
+}
+
+ul{
+    max-height: 600px;
+}
+
+button{
+    width: 40%;
+    display: flex;
+    align-self: center;
+}
+
+body{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+#title{
+    width: 50%;
+}

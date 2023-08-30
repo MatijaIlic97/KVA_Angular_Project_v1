@@ -1,0 +1,86 @@
+<body>
+    <mat-tab-group>
+        <mat-tab label="Table">
+            <div fxLayoutAlign="center center" id="search">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Search" (keyup)="doFilter($any($event.target).value)">
+                </mat-form-field>
+            </div>
+            <mat-table [dataSource]="dataSource" matSort>
+                <!-- Image -->
+                <ng-container matColumnDef="img" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
+                    <td mat-cell *matCellDef="let product"> <img src="{{product.imgSource}}" height="100px" width="80px" (click)="openProduct(product.id)"> </td>
+                </ng-container>
+                <!-- Title Column  -->
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                    <td mat-cell *matCellDef="let product"> {{product.title}} </td>
+                </ng-container>
+                <!-- Product genre  -->
+                <ng-container matColumnDef="genre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+                    <td mat-cell *matCellDef="let product"> {{product.genre}} </td>
+                </ng-container>
+
+                <!-- Pages  -->
+                <ng-container matColumnDef="pageNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Page Number </th>
+                    <td mat-cell *matCellDef="let product"> {{product.pageNumber}} </td>
+                </ng-container>
+
+                <!-- Author  -->
+                <ng-container matColumnDef="author">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
+                    <td mat-cell *matCellDef="let product"> {{product.author}} </td>
+                </ng-container>
+
+                <!-- Price  -->
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                    <td mat-cell *matCellDef="let product"> {{product.price}} din</td>
+                </ng-container>
+                <!-- Release Date -->
+                <ng-container matColumnDef="releaseDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Release Date </th>
+                    <td mat-cell *matCellDef="let product"> {{product.releaseDate.toLocaleDateString('en-US')}} </td>
+                </ng-container>
+                <!-- Rating -->
+                <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+                    <td mat-cell *matCellDef="let product"> {{ getRoundedNum(product.rating) }} </td>
+                </ng-container>
+                <!-- Add to cart button -->
+                <ng-container matColumnDef="button">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                    <td mat-cell *matCellDef="let product"><button mat-button color="primary" (click)="addToCart(product.id)">Add to cart</button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </mat-table>
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[2,5,10,20,50]">
+
+            </mat-paginator>
+        </mat-tab>
+        <mat-tab label="Grid">
+            
+            <mat-grid-list cols="4" rowHeight="500px" gutterSize="30px">
+                <ng-container  *ngFor="let product of productService.getProductArray()">
+                    <mat-grid-tile>
+                        <div fxLayout="column" id="card">
+                            <mat-card fxLayout="column" fxLayoutAlign="center" (mouseenter)="mouseEnter(product.id)" (mouseleave)="mouseLeave()">
+                                <img matCardImage src="{{ product.imgSource }}" width="200px" height="300px" alt="slika" fxFlexAlign="center">
+                                <button mat-button *ngIf="this.hover && product.id === this.hoverId" id="hiddenButton" fxFlexAlign="center" color="primary" (click)="openProduct(product.id)">View</button>
+                                <mat-card-title>{{product.title}}</mat-card-title>
+                                <mat-card-content>{{product.price}} RSD</mat-card-content>
+                            </mat-card> 
+                            <button mat-button color="primary" (click)="addToCart(product.id)">Add to cart</button>
+                            
+                        </div>
+                    </mat-grid-tile>
+                </ng-container>
+            </mat-grid-list>
+        </mat-tab>
+    </mat-tab-group>
+</body>
